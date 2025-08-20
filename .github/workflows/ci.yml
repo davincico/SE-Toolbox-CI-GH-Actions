@@ -10,14 +10,18 @@ jobs: # series of steps run on trigger
         steps:
             - name: Checkout repository
               uses: actions/checkout@v3 
-
+            - name: Secret Scanning
+              uses: trufflesecurity/trufflehog@main
+              with:
+                extra_args: --results=verified,unknown
             - name: Setup Node.js
               uses: actions/setup-node@v3
               with:
-                node-version: '18.x'
+                node-version: '18.x' 
                 cache: 'npm'
 
             - name: Start MongoDB # Setup mongodb in CI env - integration tests
+            # Guide: https://github.com/marketplace/actions/mongodb-in-github-actions
               uses: supercharge/mongodb-github-action@1.9.0  
               with:
                 mongodb-version: '6.0'
